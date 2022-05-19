@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -28,21 +29,17 @@ class LoginController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\JsonResponse
      */
 //    public function __construct()
 //    {
 //        $this->middleware('guest')->except('logout');
 //    }
 
-    public function showLoginForm(){
-        return view('auth.login', ['url' => 'login']);
-    }
-
     public function login(Request $request){
 
         $rules = array(
-            'email' => 'required|exists:realtors,email',
+            'email' => 'required|exists:users,email',
             'password' => 'required|min:6',
         );
 
@@ -55,18 +52,28 @@ class LoginController extends Controller
             ]);
         }
 
-        if(Auth::guard('realtor')->attempt([
-            'email' => $request->email,
-            'password' => $request->password
-        ],
+        $verified = User::where([
+            ['email', $request->email],
+            ['verified', 1],
+        ])->first();
 
+        if(!$verified){
+            return response()->json([
+                "success" => false,
+                "message" => "Unverified account, click on the verification link to proceed"
+            ]);
+        }
+
+        if(Auth::guard()->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ],
             $request->get('remember'))) {
             return response()->json([
                 'success' => true,
             ], 200);
         }
 
-        Session::flash('warning', 'Incorrect Login Details');
         return response()->json([
             'success' => false,
             "message" => "Incorrect login details"
@@ -80,7 +87,7 @@ class LoginController extends Controller
 
     //perform logout
     public function logout(){
-        Auth::guard('realtor')->logout();
+        Auth::guard()->logout();
         return response()->json([
             'success' => true,
         ], 200);

@@ -33,6 +33,9 @@ window.Swal = Swal;
 import HomePosts from './components/HomePosts';
 import PostDetail from './components/PostDetail';
 
+import RegisterUser from './components/RegisterUser';
+import LoginUser from './components/LoginUser';
+
 import CreatePost from './components/CreatePost';
 
 /**
@@ -45,6 +48,9 @@ const app = createApp({
     components: {
         HomePosts,
         PostDetail,
+
+        RegisterUser,
+        LoginUser,
 
         CreatePost
     }

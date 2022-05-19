@@ -58,8 +58,8 @@ class RegisterController extends Controller
 
         $rules = array(
             'name' => 'required',
-            'email' => 'required|unique:realtors',
-            'password' => 'required|min:6',
+            'email' => 'required|unique:users',
+            'password' => 'required|confirmed|min:6'
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -86,9 +86,9 @@ class RegisterController extends Controller
             ];
 
             Mail::send('emails.verification', $data, static function ($message) use ($data) {
-                $message->from('info@xeddtechnology.com', 'Square1 Dev Assignment');
+                $message->from('testemail@xeddtechnology.com', 'Square1 Dev Assignment');
                 $message->to($data['email'], $data['name']);
-                $message->replyTo('info@xeddtechnology.com', 'Square1 Dev Assignment');
+                $message->replyTo('testemail@xeddtechnology.com', 'Square1 Dev Assignment');
                 $message->subject('Account verification');
             });
 
