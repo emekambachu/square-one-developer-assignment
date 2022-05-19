@@ -41,7 +41,7 @@ Route::get('/user/post/create', [App\Http\Controllers\AccountController::class, 
 
 // Admin
 Route::get('/admin/dashboard', [App\Http\Controllers\AdminAccountController::class, 'adminDashboard'])
-    ->name('admin')->middleware('admin');
+    ->name('admin.dashboard')->middleware('admin');
 Route::post('/admin/posts/fetch', [App\Http\Controllers\AdminAccountController::class, 'fetchExternalPosts'])
     ->name('admin.posts.fetch');
 

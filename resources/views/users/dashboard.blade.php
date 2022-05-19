@@ -21,7 +21,9 @@
             <div class="col-lg-8">
                 @if($posts->total() > 0)
                     <div id="app">
-                        <home-posts :posts="{{ $posts }}"></home-posts>
+                        @foreach($posts as $post)
+                            <home-posts :post="{{ $post }}"></home-posts>
+                        @endforeach
                     </div>
                 @else
                     <div>

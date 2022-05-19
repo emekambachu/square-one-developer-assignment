@@ -58,9 +58,18 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('post.create') }}">Create post</a>
-                            </li>
+                            @if(Auth::user()->admin === 0)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('post.create') }}">Create post</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true"

@@ -19,6 +19,6 @@ class Admin
         if(auth()->user()->admin === 1){
             return $next($request);
         }
-        return redirect('/login')->with('danger', "Admin access only");
+        return redirect('/login')->with('danger-admin', "Admin access only");
     }
 }

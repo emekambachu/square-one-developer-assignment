@@ -5,8 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             @if(Session::has('success-verify'))
-                <p class="text-center bg-success p-1 text-white">
+                <p class="text-center bg-success p-1 text-sucess">
                     {{ Session::get('success-verify') }}
+                </p>
+            @endif
+            @if(Session::has('danger-admin'))
+                <p class="text-center bg-success p-1 text-danger">
+                    {{ Session::get('danger-admin') }}
                 </p>
             @endif
         </div>

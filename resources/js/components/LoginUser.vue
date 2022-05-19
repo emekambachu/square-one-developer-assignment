@@ -103,8 +103,9 @@
             loginSuccess(response){
                 if(response.data.admin === 0){
                     window.location.href = '/user/dashboard';
+                }else{
+                    window.location.href = '/admin/dashboard';
                 }
-                window.location.href = '/admin/dashboard';
             }
         }
     }

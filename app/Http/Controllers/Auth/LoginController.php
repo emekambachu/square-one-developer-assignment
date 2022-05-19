@@ -71,13 +71,13 @@ class LoginController extends Controller
             $request->get('remember'))) {
             return response()->json([
                 'success' => true,
+                'admin' => Auth::user()->admin
             ], 200);
         }
 
         return response()->json([
             'success' => false,
             'message' => "Incorrect login details",
-            'admin' => Auth::user()->admin
         ], 404);
     }
 
