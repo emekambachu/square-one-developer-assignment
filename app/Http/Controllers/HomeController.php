@@ -14,12 +14,14 @@ class HomeController extends Controller
      */
     public function index(){
 
-        $posts = BlogPost::with('user')->paginate(10);
+        $posts = BlogPost::with('user')->where('published', 1)
+            ->latest()->paginate(10);
         return view('home', compact('posts'));
     }
 
     public function show($id){
-        $post = BlogPost::findOrFail($id);
+        $post = BlogPost::with('user')->where('published', 1)
+            ->findOrFail($id);
         return view('post-detail', compact('post'));
     }
 

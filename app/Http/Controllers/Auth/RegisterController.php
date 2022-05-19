@@ -113,9 +113,9 @@ class RegisterController extends Controller
         if($verify){
             $verify->verified = 1;
             $verify->save();
-            Session::flash('success', "Email verified, please login");
+            Session::flash('success-verify', "Email verified, please login");
         }else{
-            Session::flash('warning', "Incorrect token");
+            Session::flash('warning-verify', "Incorrect token");
         }
         return view('auth.login');
     }

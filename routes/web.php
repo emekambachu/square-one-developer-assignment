@@ -34,5 +34,12 @@ Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 // Dashboard
 Route::get('/user/dashboard', [App\Http\Controllers\AccountController::class, 'index'])
     ->name('dashboard');
-Route::get('/user/post/create', [App\Http\Controllers\AccountController::class, 'index'])
+Route::get('/user/post/create', [App\Http\Controllers\AccountController::class, 'createPost'])
     ->name('post.create');
+
+// Admin
+Route::get('/admin/dashboard', [App\Http\Controllers\AdminAccountController::class, 'adminDashboard'])
+    ->name('admin')->middleware('admin');
+Route::post('/admin/posts/fetch', [App\Http\Controllers\AdminAccountController::class, 'fetchExternalPosts'])
+    ->name('admin.posts.fetch');
+

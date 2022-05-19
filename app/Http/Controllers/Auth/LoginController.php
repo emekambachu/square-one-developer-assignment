@@ -60,7 +60,7 @@ class LoginController extends Controller
         if(!$verified){
             return response()->json([
                 "success" => false,
-                "message" => "Unverified account, click on the verification link to proceed"
+                "message" => "Unverified account, click on the verification link in your email to proceed."
             ]);
         }
 
@@ -76,7 +76,8 @@ class LoginController extends Controller
 
         return response()->json([
             'success' => false,
-            "message" => "Incorrect login details"
+            'message' => "Incorrect login details",
+            'admin' => Auth::user()->admin
         ], 404);
     }
 
@@ -88,9 +89,7 @@ class LoginController extends Controller
     //perform logout
     public function logout(){
         Auth::guard()->logout();
-        return response()->json([
-            'success' => true,
-        ], 200);
+        return redirect()->route('login');
     }
 
 }

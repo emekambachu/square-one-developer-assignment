@@ -2,15 +2,25 @@
     <div class="card">
         <div class="card-header">Login</div>
 
+        <div v-if="errorMessage" class="card-body text-center bg-danger text-white">
+            <p v-for="(error, index) in errors" :key="index">
+                {{ error.toString() }}
+            </p>
+            <p>{{ message }}</p>
+        </div>
+
+        <div v-if="successMessage" class="card-body text-center bg-success text-white">
+            <p>{{ message }}</p>
+        </div>
+
         <div class="card-body">
-            <form>
+            <form v-if="!loading" @submit.prevent="login">
                 <div class="row mb-3">
                     <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
                     <div class="col-md-6">
                         <input id="email" type="email"
                                class="form-control"
                                v-model="form.email" required autocomplete="email">
-
                         <span class="invalid-feedback" role="alert">
                             <strong></strong>
                         </span>
@@ -23,9 +33,6 @@
                         <input id="password" type="password"
                                class="form-control" v-model="form.password"
                                required autocomplete="new-password">
-<!--                        <span v-if="errors.password" class="invalid-feedback" role="alert">-->
-<!--                            <strong>{{ errors.password }}</strong>-->
-<!--                        </span>-->
                     </div>
                 </div>
 
@@ -33,7 +40,7 @@
                     <div class="col-md-6 offset-md-4">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox"
-                                   name="remember" id="remember">
+                                   v-model="form.remember" value="remember" id="remember">
                             <label class="form-check-label" for="remember">
                                 Remember me
                             </label>
@@ -47,8 +54,12 @@
                             Login</button>
                     </div>
                 </div>
-
             </form>
+
+            <div v-else class="text-center">
+                <p>Submitting</p>
+                <i class="fas fa-spinner fa-spin fa-3x"></i>
+            </div>
         </div>
     </div>
 </template>
@@ -60,6 +71,7 @@
                 form:{
                     email: '',
                     password: '',
+                    remember: null
                 },
                 errors: {},
                 successMessage: false,
@@ -68,6 +80,33 @@
                 loading: false
             }
         },
+
+        methods: {
+            login(){
+                this.loading = true;
+                console.log(this.form);
+                axios.post('/api/login', this.form)
+                    .then((response) => {
+                        response.data.success === true ? this.loginSuccess(response) : [
+                            this.errors = response.data.errors,
+                            this.errorMessage = true,
+                            this.message = response.data.message,
+                        ];
+                        console.log(response.data.errors);
+                    }).catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+                    this.loading = false;
+                });
+            },
+
+            loginSuccess(response){
+                if(response.data.admin === 0){
+                    window.location.href = '/user/dashboard';
+                }
+                window.location.href = '/admin/dashboard';
+            }
+        }
     }
 </script>
 

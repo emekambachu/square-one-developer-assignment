@@ -21,6 +21,12 @@ Route::middleware('auth:sanctum')->group(function () {
         return true;
     });
 
+    // user
+    Route::post('/user/post', [App\Http\Controllers\AccountController::class, 'storePost']);
+
+    // admin
+    Route::get('/admin/posts/fetch', [App\Http\Controllers\AdminAccountController::class, 'fetchExternalPosts']);
+
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 
 });
