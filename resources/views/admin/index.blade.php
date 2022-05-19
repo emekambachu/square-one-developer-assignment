@@ -10,6 +10,9 @@
                 <!-- Search widget-->
                 <div class="card mb-4">
                     <div class="card-body">
+                        @if(Session::has('success'))
+                            {{ Session::get('success') }}
+                        @endif
                         <form method="post" action="{{ route('admin.posts.fetch') }}">
                             @csrf
                             <div class="form-group mb-4">

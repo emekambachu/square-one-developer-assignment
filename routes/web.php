@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
+Route::get('/posts/recent', [App\Http\Controllers\HomeController::class, 'indexRecent'])
+    ->name('home.recent');
 Route::get('/post/{id}/{slug}', [App\Http\Controllers\HomeController::class, 'show'])
     ->name('show');
 

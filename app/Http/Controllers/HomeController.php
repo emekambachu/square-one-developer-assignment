@@ -15,8 +15,17 @@ class HomeController extends Controller
     public function index(){
 
         $posts = BlogPost::with('user')->where('published', 1)
-            ->latest()->paginate(10);
-        return view('home', compact('posts'));
+            ->inRandomOrder()->paginate(10);
+        $order = 'random';
+        return view('home', compact('posts', 'order'));
+    }
+
+    public function indexRecent(){
+
+        $posts = BlogPost::with('user')->where('published', 1)
+            ->orderBy('publication_date', 'desc')->paginate(10);
+        $order = 'recent';
+        return view('home', compact('posts', 'order'));
     }
 
     public function show($id){
@@ -25,7 +34,7 @@ class HomeController extends Controller
         return view('post-detail', compact('post'));
     }
 
-    public function search(){
+    public function search(Request $request){
 
     }
 }
