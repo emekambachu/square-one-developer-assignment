@@ -31,7 +31,7 @@ Route::get('email/verify/{token}', [App\Http\Controllers\Auth\RegisterController
     ->name('email.verify');
 Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])
     ->name('login');
-Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 // Dashboard
 Route::get('/user/dashboard', [App\Http\Controllers\AccountController::class, 'index'])

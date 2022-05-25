@@ -39,7 +39,8 @@ class AdminAccountController extends Controller
             $postExists = $blogPost->where('title', $post->title)->first();
             if(!$postExists){
                 $count++;
-                $blogPost->user_name = 'Admin';
+                $blogPost->user_id = Auth::user()->id;
+                $blogPost->name = 'Admin';
                 $blogPost->title = $post->title;
                 $blogPost->slug = Str::slug($post->title);
                 $blogPost->description = $post->description;

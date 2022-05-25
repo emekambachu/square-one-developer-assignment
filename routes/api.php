@@ -22,7 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // user
-    Route::post('/user/post', [App\Http\Controllers\AccountController::class, 'storePost']);
+    Route::post('/user/post', [App\Http\Controllers\AccountController::class, 'storePost'])
+        ->name('post.store');
 
     // admin
     Route::get('/admin/posts/fetch', [App\Http\Controllers\AdminAccountController::class, 'fetchExternalPosts']);
@@ -32,5 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // Register/Login
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create']);
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])
+    ->name('user.register');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])
+    ->name('user.login');

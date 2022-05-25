@@ -13,7 +13,6 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-
         $posts = BlogPost::with('user')->where('published', 1)
             ->inRandomOrder()->paginate(10);
         $order = 'random';

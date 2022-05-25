@@ -11,7 +11,9 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         @if(Session::has('success'))
-                            {{ Session::get('success') }}
+                            <p class="bg-success text-center p-1 text-white">
+                                {{ Session::get('success') }}
+                            </p>
                         @endif
                         <form method="post" action="{{ route('admin.posts.fetch') }}">
                             @csrf
