@@ -23431,7 +23431,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-Object(function webpackMissingModule() { var e = new Error("Cannot find module './routes'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.esm.min.js");
@@ -23489,7 +23490,7 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     LoginUser: _components_LoginUser__WEBPACK_IMPORTED_MODULE_9__["default"],
     CreatePost: _components_CreatePost__WEBPACK_IMPORTED_MODULE_10__["default"]
   }
-}).use(Object(function webpackMissingModule() { var e = new Error("Cannot find module './routes'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), (axios__WEBPACK_IMPORTED_MODULE_2___default()), vue_axios__WEBPACK_IMPORTED_MODULE_3__["default"], (moment__WEBPACK_IMPORTED_MODULE_4___default())).mount('#app');
+}).use((_routes__WEBPACK_IMPORTED_MODULE_1___default()), (axios__WEBPACK_IMPORTED_MODULE_2___default()), vue_axios__WEBPACK_IMPORTED_MODULE_3__["default"], (moment__WEBPACK_IMPORTED_MODULE_4___default())).mount('#app');
 
 /***/ }),
 
@@ -23528,6 +23529,16 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/routes.js":
+/*!********************************!*\
+  !*** ./resources/js/routes.js ***!
+  \********************************/
+/***/ (() => {
+
+
 
 /***/ }),
 
