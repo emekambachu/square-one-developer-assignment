@@ -1,64 +1,27 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<strong>Description</strong>
+<p>This assignment was built using Laravel for the backend and parts of the front end get and post request from the front-end were handles with vue.js.</p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<p>To setup, run migration and db seeder to populate the database</p>
 
-## About Laravel
+<p>The relevant models/tables are the User and BlogPost. The relevant controllers include RegisterController, LoginController, AccountController, AdminAccountController, HomeController.</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p>The relevant vue.js components include CreatePost, HomePosts, LoginUser, RegisterUser </p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<strong>Home page</strong><br>
+<p>The Homepage loads all posts made by both admin and the users, the sort by recent button on the homepage orders the posts by recently published. The recently published and recently created have separate fields. The posts from the home page are gotten from the server using Laravel for better pagination and SEO but displayed using vue.js for better DOM manipulation.</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<strong>Registration and Login</strong><br>
+<p>A new member signs up and must approve their account by clicking on an email verification link sent to their email. In the user database table, the verified members are assigned by a ‘verified’ field using ‘1’ for verified and ‘0’ unverified. Unverified members are unable to login unless they vet verified.</p>
 
-## Learning Laravel
+<strong>Dashboard:</strong>
+<p>After login, members can access their dashboard and submit posts, posts can be set as draft or published. Published posts are displayed on the home page while drafts are hidden and seen by only the members.
+All post submissions are validated from the front-end using vue.js and the backend using Laravel validation. Submission of posts are made using the API post request via Vue.js</p> 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<strong>Admin</strong>
+<p>The admin is the only ones that can get new posts from the API submitted. The admin users are assigned by the ‘admin’ column using ‘1’ for admin and ‘0’ for non-admin.<p>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<strong>Test</strong>
+<p>Tests were being conducted using factories, seeders and feature testing. There are 2 types of test files, Post Test and User Test. The user test asserts the registration, login and authentication of the website, while the Post test asserts the submission of posts by logged in members.</p>
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<strong>Note</strong>
+<p>I could have done a lot more feature test if given more time due to my on-going company tasks.</p>
