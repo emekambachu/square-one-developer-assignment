@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Services\UserRegistrationService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -43,54 +45,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function create(Request $request){
-
-        //Generate email verification token
-        function verificationToken($length = 11){
-            $characters = '0123456789ABCDEFG';
-            $charactersLength = strlen($characters);
-            $randomString = '';
-            for ($i = 0; $i < $length; $i++) {
-                $randomString .= $characters[random_int(0, $charactersLength - 1)];
-            }
-            return $randomString;
-        }
-
-        $rules = array(
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required|confirmed|min:6'
-        );
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if($validator->fails()){
-            return response()->json([
-                "success" => false,
-                "errors" => $validator->getMessageBag()->toArray()
-            ]);
-        }
+    protected function create(RegisterRequest $request){
 
         try{
-            $user = User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
-                'verification_token' => verificationToken(),
+            $user = UserRegistrationService::createUser($request);
+            UserRegistrationService::sendEmail($user);
+            return response()->json([
+                'success' => true,
+                'message' => 'Registration complete, click on the verification link sent to your email'
             ]);
-
-            $data = [
-                'name' => $user->name,
-                'email' => $user->email,
-                'token' => $user->verification_token,
-            ];
-
-            Mail::send('emails.verification', $data, static function ($message) use ($data) {
-                $message->from('testemail@xeddtechnology.com', 'Square1 Dev Assignment');
-                $message->to($data['email'], $data['name']);
-                $message->replyTo('testemail@xeddtechnology.com', 'Square1 Dev Assignment');
-                $message->subject('Account verification');
-            });
 
         }catch(\Exception $error) {
             return response()->json([
@@ -98,25 +61,15 @@ class RegisterController extends Controller
                 "message" => $error->getMessage()
             ]);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Registration complete, click on the verification link sent to your email'
-        ]);
     }
 
     public function emailVerify($token){
 
-        $user = new User();
-        $verify = $user->where('verification_token', $token)->first();
-
-        if($verify){
-            $verify->verified = 1;
-            $verify->save();
-            Session::flash('success-verify', "Email verified, please login");
-        }else{
-            Session::flash('warning-verify', "Incorrect token");
+        try{
+            UserRegistrationService::verifyUserEmail($token);
+            return view('auth.login');
+        }catch(\Exception $error){
+            return $error->getMessage();
         }
-        return view('auth.login');
     }
 }

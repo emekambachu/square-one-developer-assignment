@@ -87,7 +87,7 @@
                     password: '',
                     password_confirmation: ''
                 },
-                errors: {},
+                errors: [],
                 successMessage: false,
                 errorMessage: false,
                 message: '',
@@ -106,12 +106,23 @@
                 console.log(this.form);
                 axios.post('/api/register', this.form)
                     .then((response) => {
-                        response.data.success === true ? this.registerSuccess(response) : [
-                            this.errors = response.data.errors,
-                            this.errorMessage = true,
-                            this.successMessage = false,
-                            this.message = response.data.message,
-                        ];
+                        if(response.data.success === true){
+                            this.successMessage = true;
+                            this.errorMessage = false;
+                            this.message = response.data.message;
+                            this.errors = [];
+                            // Empty all fields
+                            let self = this;
+                            Object.keys(this.form).forEach(function(key,index) {
+                                self.form[key] = '';
+                            });
+                        }else{
+                            this.loading = false;
+                            this.errors = response.data.errors;
+                            this.errorMessage = true;
+                            this.successMessage = false;
+                            this.message = response.data.message;
+                        }
                         console.log(response.data.errors);
                     }).catch((error) => {
                     console.log(error);
@@ -119,18 +130,7 @@
                     this.loading = false;
                 });
             },
-            registerSuccess(response){
-                this.successMessage = true;
-                this.errorMessage = false;
-                this.message = response.data.message;
-                this.errors = {};
 
-                // Empty all fields
-                let self = this;
-                Object.keys(this.form).forEach(function(key,index) {
-                    self.form[key] = '';
-                });
-            }
         }
     }
 </script>

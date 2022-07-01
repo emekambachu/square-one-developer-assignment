@@ -14,11 +14,11 @@ class CreateBlogPostsTable extends Migration
     public function up()
     {
         Schema::create('blog_posts', static function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->id()->unique()->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->string('name')->nullable();
-            $table->string('title');
-            $table->string('slug');
+            $table->string('title')->unique()->index();
+            $table->string('slug')->unique();
             $table->longText('description');
             $table->string('publication_date');
             $table->boolean('published')->default(0);

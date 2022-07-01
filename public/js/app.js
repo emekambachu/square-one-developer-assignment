@@ -22769,7 +22769,7 @@ __webpack_require__.r(__webpack_exports__);
         password: '',
         password_confirmation: ''
       },
-      errors: {},
+      errors: [],
       successMessage: false,
       errorMessage: false,
       message: '',
@@ -22791,23 +22791,29 @@ __webpack_require__.r(__webpack_exports__);
 
       console.log(this.form);
       axios.post('/api/register', this.form).then(function (response) {
-        response.data.success === true ? _this.registerSuccess(response) : [_this.errors = response.data.errors, _this.errorMessage = true, _this.successMessage = false, _this.message = response.data.message];
+        if (response.data.success === true) {
+          _this.successMessage = true;
+          _this.errorMessage = false;
+          _this.message = response.data.message;
+          _this.errors = []; // Empty all fields
+
+          var self = _this;
+          Object.keys(_this.form).forEach(function (key, index) {
+            self.form[key] = '';
+          });
+        } else {
+          _this.loading = false;
+          _this.errors = response.data.errors;
+          _this.errorMessage = true;
+          _this.successMessage = false;
+          _this.message = response.data.message;
+        }
+
         console.log(response.data.errors);
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         _this.loading = false;
-      });
-    },
-    registerSuccess: function registerSuccess(response) {
-      this.successMessage = true;
-      this.errorMessage = false;
-      this.message = response.data.message;
-      this.errors = {}; // Empty all fields
-
-      var self = this;
-      Object.keys(this.form).forEach(function (key, index) {
-        self.form[key] = '';
       });
     }
   }
