@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use App\Models\User;
+use App\Services\PostService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use function App\Http\Controllers\Auth\verificationToken;
+
 
 class AccountController extends Controller
 {
@@ -31,9 +32,24 @@ class AccountController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $posts = BlogPost::where('user_id', Auth::user()->id)
-            ->with('user')->has('user')->paginate();
-        return view('users.dashboard', compact('posts'));
+        return view('users.dashboard');
+    }
+
+    public function myPosts(){
+        try{
+            $posts = PostService::postsbyUserId(Auth::user()->id)
+                ->orderBy('created_at', 'desc')->paginate(2);
+            return response()->json([
+                "success" => true,
+                "posts" => $posts
+            ]);
+
+        }catch (\Exception $error){
+            return response()->json([
+                "success" => false,
+                "message" => $error->getMessage()
+            ]);
+        }
     }
 
     public function createPost(){

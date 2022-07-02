@@ -3,17 +3,18 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(){
+    public function authorize()
+    {
         return true;
     }
 
@@ -24,19 +25,16 @@ class RegisterRequest extends FormRequest
      */
     public function rules(){
         return [
-            'name' => 'required|min:8',
-            'email' => 'required|email|min:8|unique:users',
-            'password' => 'required|confirmed|min:8',
+            'email' => 'required|exists:users,email',
+            'password' => 'required|min:6',
         ];
     }
 
     public function messages(){
         return [
-            'name.required' => 'Name is required!',
             'email.required' => 'Email is required!',
-            'email.unique' => 'User already exists!',
+            'email.exists' => 'User does not exist!',
             'password.required' => 'Password is required!',
-            'password.confirmed' => 'Confirm password!',
         ];
     }
 

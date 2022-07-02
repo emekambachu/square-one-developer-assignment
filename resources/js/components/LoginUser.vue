@@ -73,7 +73,7 @@
                     password: '',
                     remember: null
                 },
-                errors: {},
+                errors: [],
                 successMessage: false,
                 errorMessage: false,
                 message: '',
@@ -87,12 +87,16 @@
                 console.log(this.form);
                 axios.post('/api/login', this.form)
                     .then((response) => {
-                        response.data.success === true ? this.loginSuccess(response) : [
-                            this.errors = response.data.errors,
-                            this.errorMessage = true,
-                            this.message = response.data.message,
-                        ];
-                        console.log(response.data.errors);
+                        if(response.data.success === true){
+                            this.errorMessage = false;
+                            window.location.href = '/user/dashboard'
+                        }else{
+                            this.errors = response.data.errors;
+                            this.errorMessage = true;
+                            this.message = response.data.message;
+                        }
+
+                        console.log(response.data.message);
                     }).catch((error) => {
                     console.log(error);
                 }).finally(() => {
@@ -100,13 +104,6 @@
                 });
             },
 
-            loginSuccess(response){
-                if(response.data.admin === 0){
-                    window.location.href = '/user/dashboard';
-                }else{
-                    window.location.href = '/admin/dashboard';
-                }
-            }
         }
     }
 </script>

@@ -37,7 +37,7 @@ Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'
 Route::get('/user/dashboard', [App\Http\Controllers\AccountController::class, 'index'])
     ->name('dashboard');
 Route::get('/user/post/create', [App\Http\Controllers\AccountController::class, 'createPost'])
-    ->name('post.create');
+    ->name('user.post.create');
 
 // Admin
 Route::get('/admin/dashboard', [App\Http\Controllers\AdminAccountController::class, 'adminDashboard'])

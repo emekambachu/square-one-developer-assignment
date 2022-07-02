@@ -37,6 +37,7 @@ import RegisterUser from './components/RegisterUser';
 import LoginUser from './components/LoginUser';
 
 import CreatePost from './components/CreatePost';
+import BlogPosts from './components/BlogPosts';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -52,7 +53,8 @@ const app = createApp({
         RegisterUser,
         LoginUser,
 
-        CreatePost
+        CreatePost,
+        BlogPosts
     }
 }).use(
     router, axios, VueAxios, moment
